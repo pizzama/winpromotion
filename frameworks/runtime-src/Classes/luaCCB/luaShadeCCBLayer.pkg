@@ -1,0 +1,5 @@
+class luaShadeCCBLayer : public luaCCBNode
+{
+    bool openCCBFile(const char* pCCBFileName);
+    static luaShadeCCBLayer* create();
+    };

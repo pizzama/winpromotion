@@ -1,0 +1,6 @@
+class DeapthScrollView:public cocos2d::extension::ScrollView {
+public:
+	static DeapthScrollView* create(Size size, Node* container = NULL);
+    void registerHandler(cocos2d::LUA_FUNCTION handler);
+    void unregisterHandler();
+};

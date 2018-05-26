@@ -1,0 +1,28 @@
+class luaCCBNode :
+public CCNode,
+public CCBSelectorResolver,
+public CCBMemberVariableAssigner,
+public CCNodeLoaderListener
+{
+    static luaCCBNode* create();
+
+    bool openCCBFile(const char* pCCBFileName);
+    
+    CCObject* objectForName(const char* objName);
+    
+    //enforcement changed for type
+    CCNode*   nodeForName(const char* nodeName);
+    CCSprite* spriteForName(const char* spriteName);
+    CCScale9Sprite* scale9SpriteForName(const char* scale9SpriteName);
+    CCLayer*  layerForName(const char* layerName);
+    CCLayerColor*  layerColorForName(const char* layerColorName);
+    CCLayerGradient*   layerGradientForName(const char* layerGradientName);
+    CCScrollView*   scrollViewForName(const char* scrollViewName);
+    CCLabelTTF*    labelTTFForName(const char* labelTTFName);
+    CCLabelBMFont* labelBMFontForName(const char* labelBMFontName);
+    CCControlButton* controlButtonForName(const char* controlButtonName);
+    CCParticleSystemQuad*  particleForName(const char* particleName);
+
+    bool      registerFunctionWithFuncName(const char* funName,int handle);
+    void      unregisterFunctionWithFuncName(const char* funName);
+};
