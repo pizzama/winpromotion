@@ -1,5 +1,5 @@
 local mainscene_view = class("mainsceneView",__G_REQUIRE("app.like_oo.oo_sceneBase"));
-
+local sceneman = __G_REQUIRE("app.mediator.mainscene.sceneman")
 function mainscene_view:onCommand( command , data )
 	-- body
 	--[[同步命令回调]]
@@ -61,6 +61,12 @@ function mainscene_view:onCreate(  )
 
 	end,1);
 	self.m_rootView:addChild(scrollView)
+
+	--增加管家和账房角色
+	local man = sceneman.new("human/human2.png",cc.p(700,400));
+	scrollView:addContainderChild(man,0,"man")
+	local man1 = sceneman.new("human/human4.png",cc.p(500,400));
+	scrollView:addContainderChild(man1,0,"man1")
 end
 
 function mainscene_view:onEnter(  )
