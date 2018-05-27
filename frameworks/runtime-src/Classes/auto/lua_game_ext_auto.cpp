@@ -3,7 +3,7 @@
 #include "scripting/lua-bindings/manual/tolua_fix.h"
 #include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 
-int lua_gameext_DeapthScrollView_registerHandler(lua_State* tolua_S)
+int lua_gameext_DeapthScrollView_getFrontLayer(lua_State* tolua_S)
 {
     int argc = 0;
     DeapthScrollView* cobj = nullptr;
@@ -23,7 +23,54 @@ int lua_gameext_DeapthScrollView_registerHandler(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_gameext_DeapthScrollView_registerHandler'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_gameext_DeapthScrollView_getFrontLayer'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_gameext_DeapthScrollView_getFrontLayer'", nullptr);
+            return 0;
+        }
+        cocos2d::Layer* ret = cobj->getFrontLayer();
+        object_to_luaval<cocos2d::Layer>(tolua_S, "cc.Layer",(cocos2d::Layer*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "DeapthScrollView:getFrontLayer",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_gameext_DeapthScrollView_getFrontLayer'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_gameext_DeapthScrollView_initWithViewSize(lua_State* tolua_S)
+{
+    int argc = 0;
+    DeapthScrollView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"DeapthScrollView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (DeapthScrollView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_gameext_DeapthScrollView_initWithViewSize'", nullptr);
         return 0;
     }
 #endif
@@ -31,24 +78,41 @@ int lua_gameext_DeapthScrollView_registerHandler(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-//        int arg0;
-        LUA_FUNCTION arg0 = (  toluafix_ref_function(tolua_S,2,0));
-//        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "DeapthScrollView:registerHandler");
-//        if(!ok)
-//        {
-//            tolua_error(tolua_S,"invalid arguments in function 'lua_gameext_DeapthScrollView_registerHandler'", nullptr);
-//            return 0;
-//        }
-        cobj->registerHandler(arg0);
-        lua_settop(tolua_S, 1);
+        cocos2d::Size arg0;
+
+        ok &= luaval_to_size(tolua_S, 2, &arg0, "DeapthScrollView:initWithViewSize");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_gameext_DeapthScrollView_initWithViewSize'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initWithViewSize(arg0);
+        tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "DeapthScrollView:registerHandler",argc, 1);
+    if (argc == 2) 
+    {
+        cocos2d::Size arg0;
+        cocos2d::Node* arg1;
+
+        ok &= luaval_to_size(tolua_S, 2, &arg0, "DeapthScrollView:initWithViewSize");
+
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 3, "cc.Node",&arg1, "DeapthScrollView:initWithViewSize");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_gameext_DeapthScrollView_initWithViewSize'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initWithViewSize(arg0, arg1);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "DeapthScrollView:initWithViewSize",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_gameext_DeapthScrollView_registerHandler'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_gameext_DeapthScrollView_initWithViewSize'.",&tolua_err);
 #endif
 
     return 0;
@@ -100,7 +164,7 @@ int lua_gameext_DeapthScrollView_unregisterHandler(lua_State* tolua_S)
 
     return 0;
 }
-int lua_gameext_DeapthScrollView_setContentOffset(lua_State* tolua_S)
+int lua_gameext_DeapthScrollView_addFrontLayerChild(lua_State* tolua_S)
 {
     int argc = 0;
     DeapthScrollView* cobj = nullptr;
@@ -120,7 +184,222 @@ int lua_gameext_DeapthScrollView_setContentOffset(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_gameext_DeapthScrollView_setContentOffset'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_gameext_DeapthScrollView_addFrontLayerChild'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 3) 
+    {
+        cocos2d::Node* arg0;
+        int arg1;
+        std::string arg2;
+
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "DeapthScrollView:addFrontLayerChild");
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "DeapthScrollView:addFrontLayerChild");
+
+        ok &= luaval_to_std_string(tolua_S, 4,&arg2, "DeapthScrollView:addFrontLayerChild");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_gameext_DeapthScrollView_addFrontLayerChild'", nullptr);
+            return 0;
+        }
+        cobj->addFrontLayerChild(arg0, arg1, arg2);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "DeapthScrollView:addFrontLayerChild",argc, 3);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_gameext_DeapthScrollView_addFrontLayerChild'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_gameext_DeapthScrollView_addBackLayerChild(lua_State* tolua_S)
+{
+    int argc = 0;
+    DeapthScrollView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"DeapthScrollView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (DeapthScrollView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_gameext_DeapthScrollView_addBackLayerChild'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 3) 
+    {
+        cocos2d::Node* arg0;
+        int arg1;
+        std::string arg2;
+
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "DeapthScrollView:addBackLayerChild");
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "DeapthScrollView:addBackLayerChild");
+
+        ok &= luaval_to_std_string(tolua_S, 4,&arg2, "DeapthScrollView:addBackLayerChild");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_gameext_DeapthScrollView_addBackLayerChild'", nullptr);
+            return 0;
+        }
+        cobj->addBackLayerChild(arg0, arg1, arg2);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "DeapthScrollView:addBackLayerChild",argc, 3);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_gameext_DeapthScrollView_addBackLayerChild'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_gameext_DeapthScrollView_getBackLayer(lua_State* tolua_S)
+{
+    int argc = 0;
+    DeapthScrollView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"DeapthScrollView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (DeapthScrollView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_gameext_DeapthScrollView_getBackLayer'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_gameext_DeapthScrollView_getBackLayer'", nullptr);
+            return 0;
+        }
+        cocos2d::Layer* ret = cobj->getBackLayer();
+        object_to_luaval<cocos2d::Layer>(tolua_S, "cc.Layer",(cocos2d::Layer*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "DeapthScrollView:getBackLayer",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_gameext_DeapthScrollView_getBackLayer'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_gameext_DeapthScrollView_addContainderChild(lua_State* tolua_S)
+{
+    int argc = 0;
+    DeapthScrollView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"DeapthScrollView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (DeapthScrollView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_gameext_DeapthScrollView_addContainderChild'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 3) 
+    {
+        cocos2d::Node* arg0;
+        int arg1;
+        std::string arg2;
+
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "DeapthScrollView:addContainderChild");
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "DeapthScrollView:addContainderChild");
+
+        ok &= luaval_to_std_string(tolua_S, 4,&arg2, "DeapthScrollView:addContainderChild");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_gameext_DeapthScrollView_addContainderChild'", nullptr);
+            return 0;
+        }
+        cobj->addContainderChild(arg0, arg1, arg2);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "DeapthScrollView:addContainderChild",argc, 3);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_gameext_DeapthScrollView_addContainderChild'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_gameext_DeapthScrollView_registerHandler(lua_State* tolua_S)
+{
+    int argc = 0;
+    DeapthScrollView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"DeapthScrollView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (DeapthScrollView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_gameext_DeapthScrollView_registerHandler'", nullptr);
         return 0;
     }
 #endif
@@ -128,41 +407,24 @@ int lua_gameext_DeapthScrollView_setContentOffset(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::Vec2 arg0;
-
-        ok &= luaval_to_vec2(tolua_S, 2, &arg0, "DeapthScrollView:setContentOffset");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_gameext_DeapthScrollView_setContentOffset'", nullptr);
-            return 0;
-        }
-        cobj->setContentOffset(arg0);
+        LUA_FUNCTION arg0 = (  toluafix_ref_function(tolua_S,2,0));
+//        int arg0;
+//        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "DeapthScrollView:registerHandler");
+//        if(!ok)
+//        {
+//            tolua_error(tolua_S,"invalid arguments in function 'lua_gameext_DeapthScrollView_registerHandler'", nullptr);
+//            return 0;
+//        }
+        cobj->registerHandler(arg0);
         lua_settop(tolua_S, 1);
         return 1;
     }
-    if (argc == 2) 
-    {
-        cocos2d::Vec2 arg0;
-        bool arg1;
-
-        ok &= luaval_to_vec2(tolua_S, 2, &arg0, "DeapthScrollView:setContentOffset");
-
-        ok &= luaval_to_boolean(tolua_S, 3,&arg1, "DeapthScrollView:setContentOffset");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_gameext_DeapthScrollView_setContentOffset'", nullptr);
-            return 0;
-        }
-        cobj->setContentOffset(arg0, arg1);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "DeapthScrollView:setContentOffset",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "DeapthScrollView:registerHandler",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_gameext_DeapthScrollView_setContentOffset'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_gameext_DeapthScrollView_registerHandler'.",&tolua_err);
 #endif
 
     return 0;
@@ -298,9 +560,14 @@ int lua_register_gameext_DeapthScrollView(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"DeapthScrollView");
         tolua_function(tolua_S,"new",lua_gameext_DeapthScrollView_constructor);
-        tolua_function(tolua_S,"registerHandler",lua_gameext_DeapthScrollView_registerHandler);
+        tolua_function(tolua_S,"getFrontLayer",lua_gameext_DeapthScrollView_getFrontLayer);
+        tolua_function(tolua_S,"initWithViewSize",lua_gameext_DeapthScrollView_initWithViewSize);
         tolua_function(tolua_S,"unregisterHandler",lua_gameext_DeapthScrollView_unregisterHandler);
-        tolua_function(tolua_S,"setContentOffset",lua_gameext_DeapthScrollView_setContentOffset);
+        tolua_function(tolua_S,"addFrontLayerChild",lua_gameext_DeapthScrollView_addFrontLayerChild);
+        tolua_function(tolua_S,"addBackLayerChild",lua_gameext_DeapthScrollView_addBackLayerChild);
+        tolua_function(tolua_S,"getBackLayer",lua_gameext_DeapthScrollView_getBackLayer);
+        tolua_function(tolua_S,"addContainderChild",lua_gameext_DeapthScrollView_addContainderChild);
+        tolua_function(tolua_S,"registerHandler",lua_gameext_DeapthScrollView_registerHandler);
         tolua_function(tolua_S,"create", lua_gameext_DeapthScrollView_create);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(DeapthScrollView).name();
@@ -312,12 +579,12 @@ TOLUA_API int register_all_gameext(lua_State* tolua_S)
 {
 	tolua_open(tolua_S);
 	
-    tolua_module(tolua_S,"pz",0);
-    tolua_beginmodule(tolua_S,"pz");
+	tolua_module(tolua_S,"pz",0);
+	tolua_beginmodule(tolua_S,"pz");
 
 	lua_register_gameext_DeapthScrollView(tolua_S);
 
-    tolua_endmodule(tolua_S);
+	tolua_endmodule(tolua_S);
 	return 1;
 }
 

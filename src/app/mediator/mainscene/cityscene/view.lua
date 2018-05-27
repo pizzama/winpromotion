@@ -1,11 +1,11 @@
-local mainscene_view = class("mainsceneView",__G_REQUIRE("app.like_oo.oo_sceneBase"));
+local cityscene_view = class("cityceneView",__G_REQUIRE("app.like_oo.oo_sceneBase"));
 
-function mainscene_view:onCommand( command , data )
+function cityscene_view:onCommand( command , data )
 	-- body
 	--[[同步命令回调]]
 end
 
-function mainscene_view:onCreate(  )
+function cityscene_view:onCreate(  )
 	local visibleSize = cc.Director:sharedDirector():getVisibleSize();
 	local scrollViewSize = CCSizeMake(visibleSize.width,visibleSize.height)
 	local scrollView = pz.DeapthScrollView:create(scrollViewSize)
@@ -15,28 +15,22 @@ function mainscene_view:onCreate(  )
 	scrollView:setDirection(cc.SCROLLVIEW_DIRECTION_HORIZONTAL)
 
 	--天空背景
-	local sp2 = cc.Sprite:create("background/homebg4.png");
+	local sp2 = cc.Sprite:create("background/citybg3.jpg");
 	local size = sp2:getContentSize();
 	local sp2pos = cc.p(size.width/2,700)
 	sp2:setPosition(sp2pos)
 	scrollView:addBackLayerChild(sp2,0,"sp2")
-	--山远景
-	local sp3 = cc.Sprite:create("background/homebg3.png");
-	local size = sp3:getContentSize();
-	local sp3pos = cc.p(size.width/2,500)
-	sp3:setPosition(sp3pos)
-	scrollView:addBackLayerChild(sp3,0,"sp3")
 
 	--山近景
-	local sp4 = cc.Sprite:create("background/homebg2.png");
+	local sp4 = cc.Sprite:create("background/citybg2.png");
 	local size = sp4:getContentSize();
-	local sp4pos = cc.p(size.width/2,460)
+	local sp4pos = cc.p(size.width/2,650)
 	sp4:setPosition(sp4pos)
 	scrollView:addBackLayerChild(sp4,0,"sp4")
 	
-	local sp1 = cc.Sprite:create("background/homebg1.png");
+	local sp1 = cc.Sprite:create("background/citybg1.png");
 	local size = sp1:getContentSize();
-	sp1:setPosition(cc.p(size.width*0.5,300))
+	sp1:setPosition(cc.p(size.width*0.5,500))
 	scrollView:setContentSize(size);
 	scrollView:addContainderChild(sp1,0,"fa");
 	scrollView:setBounceable(false);
@@ -53,18 +47,15 @@ function mainscene_view:onCreate(  )
 		local p2 = cc.p(sp2pos.x + vec.x*0.4,sp2pos.y + vec.y*0.3)
 		sp2:setPosition(p2);
 
-		local p3 = cc.p(sp3pos.x + vec.x*0.3,sp3pos.y + vec.y)
-		sp3:setPosition(p3)
-
-		local p4 = cc.p(sp4pos.x + vec.x * 0.1,sp4pos.y + vec.y)
+		local p4 = cc.p(sp4pos.x + vec.x * 0.2,sp4pos.y + vec.y*0.2)
 		sp4:setPosition(p4);
 
 	end,1);
 	self.m_rootView:addChild(scrollView)
 end
 
-function mainscene_view:onEnter(  )
+function cityscene_view:onEnter(  )
 	-- body
 end
 
-return mainscene_view;
+return cityscene_view;

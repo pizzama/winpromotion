@@ -1,5 +1,5 @@
 -- if you want create a pop window,you mast inheritance the oo_viewBase
-local pop_base = class( "popBase" , require("like_oo.oo_viewBase") );
+local pop_base = class( "popBase" , require("app.like_oo.oo_viewBase") );
 pop_base.m_type = 2;
 pop_base.m_selfClose = false;
 pop_base.m_priority = 0;

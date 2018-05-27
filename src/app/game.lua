@@ -38,7 +38,7 @@ end
 -- 运行
 function game:run()
     __G_PURGEPACKAGELOADED()
-	rootController:openView("update")
+	rootController:openView("login")
 end
 
 

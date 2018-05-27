@@ -18,4 +18,9 @@ int register_all_gameext(lua_State* tolua_S);
 
 
 
+
+
+
+
+
 #endif // __gameext_h__
