@@ -8,9 +8,10 @@ function sceneman:ctor(image,pos)
     self:addChild(self.man);
     local function onTouch( eventType, x, y )
         if eventType == "began" then
-            local pt = self:convertToNodeSpace(cc, p(x, y));
-            if self.man:getBoundingBox().containsPoint(pt) then
-                local act = cc.TintBy:create(2, -150, -150, -150);
+            local pt = self:convertToNodeSpace(cc.p(x, y));
+            local rec = self.man:getBoundingBox();
+            if cc.rectContainsPoint(rec,pt) then
+                local act = cc.TintBy:create(1.5, -150, -150, -150);
                 self.man:runAction(cc.RepeatForever:create(cc.Sequence:create({act,act:reverse()})))
                 return true;
             else
